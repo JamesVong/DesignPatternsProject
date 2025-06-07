@@ -1,6 +1,9 @@
-package guild;
+//package guild;
 
 import guild.bounty.BountyHunter;
+import guild.bounty.BountyHunterFactory;
+import guild.bounty.ImperialFactory;
+import guild.bounty.MandalorianFactory;
 import guild.criminal.Criminal;
 
 public class Main {
@@ -36,13 +39,21 @@ public class Main {
         System.out.println("=== Criminal Profile ===");
         jabba.displayProfile();
 
+        // Create factories
+        BountyHunterFactory mandalorianFactory = new MandalorianFactory();
+        BountyHunterFactory imperialFactory = new ImperialFactory();
+
+        BountyHunter dinDjarin = mandalorianFactory.recruitHunter("Din Djarin", "Silver");
+        BountyHunter bobaFett = mandalorianFactory.recruitHunter("Boba Fett", "Gold");
+        BountyHunter imperialAgent = imperialFactory.recruitHunter("Agent Kallus", "Commander");
+
         // Create a bounty hunter
-        BountyHunter hunter = new TestHunter("Din Djarin", "Mandalorian", "Silver");
+        // BountyHunter hunter = new TestHunter("Din Djarin", "Mandalorian", "Silver");
 
         // Simulate actions
         System.out.println("\n=== Bounty Hunter Actions ===");
-        hunter.track(jabba);
-        hunter.capture(jabba);
-        hunter.reportStatus();
+        dinDjarin.track(jabba);
+        dinDjarin.capture(jabba);
+        dinDjarin.reportStatus();
     }
 }
