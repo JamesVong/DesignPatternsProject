@@ -11,13 +11,11 @@ public class CaptureState implements HunterState {
                 .println("[CAPTURE] Target: " + criminal.getAlias() + " - Threat Level: " + criminal.getThreatLevel());
         System.out.println("[CAPTURE] Moving into position...");
 
-        // Use the enhanced capture from decorated hunter
         context.getHunter().capture(criminal);
 
         System.out.println("[CAPTURE] Target secured and restrained");
         System.out.println("[CAPTURE] Preparing for transport to authorities");
 
-        // Simulate capture time
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -27,7 +25,7 @@ public class CaptureState implements HunterState {
         context.setActionCompleted(true);
         System.out.println("[CAPTURE] Mission completed successfully!");
 
-        // Final status report
+        
         System.out.println("\n Final Mission Report");
         context.getHunter().reportStatus();
     }

@@ -29,14 +29,14 @@ public class MissionManager {
         try {
             // First, equip the hunter using Strategy + Decorator patterns
             CaptureContext captureContext = new CaptureContext();
-            System.out.println("\nPHASE 1: EQUIPMENT PREPARATION");
+            System.out.println("\nEQUIPMENT PREPARATION");
             BountyHunter equippedHunter = captureContext.equipHunterOnly(hunter, criminal);
 
             // Create hunter context with state management
             HunterContext hunterContext = new HunterContext(equippedHunter);
 
             // Execute mission phases with state transitions
-            System.out.println("\nPHASE 2: STATE-BASED MISSION EXECUTION");
+            System.out.println("\nSTATE-BASED MISSION EXECUTION");
 
             // Phase 1: Equipped State
             executePhase(hunterContext, criminal, "EQUIPMENT PREPARATION");

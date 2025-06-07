@@ -36,12 +36,11 @@ public class Main {
         scheduler.registerHunter(imperialAgent);
 
         System.out.println("\n" + "=".repeat(80));
-        System.out.println("INITIAL SYSTEM STATUS");
         System.out.println("=".repeat(80));
         scheduler.displayStatus();
 
-        // DEMO 1: Add missions to queue when hunters are available
-        System.out.println("DEMO 1: AUTOMATIC MISSION ASSIGNMENT");
+        // Add missions to queue when hunters are available
+
         System.out.println("=".repeat(80));
 
         System.out.println("Adding high-priority mission...");
@@ -63,7 +62,7 @@ public class Main {
 
         scheduler.displayStatus();
 
-        // DEMO 2: Add missions when hunters are busy
+        // Add missions when hunters are busy
 
         // Manually set some hunters as unavailable
         dinDjarin.setAvailability(new UnavailableState("Equipment maintenance"));
@@ -77,7 +76,7 @@ public class Main {
 
         scheduler.displayStatus();
 
-        // DEMO 3: Hunter becomes available and gets auto-assigned
+        // Hunter becomes available and gets auto-assigned
 
         System.out.println("Din Djarin finishing maintenance...");
         dinDjarin.setAvailability(new guild.availability.AvailableState());

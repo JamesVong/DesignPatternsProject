@@ -22,7 +22,6 @@ public abstract class BountyHunter {
         this.observers = new ArrayList<>();
     }
 
-    // Existing getters
     public String getName() {
         return name;
     }
@@ -35,7 +34,6 @@ public abstract class BountyHunter {
         return rank;
     }
 
-    // New availability methods
     public boolean isAvailable() {
         return availabilityState.isAvailable();
     }
@@ -80,7 +78,6 @@ public abstract class BountyHunter {
         }
     }
 
-    // Abstract methods remain the same
     public abstract void track(Criminal target);
 
     public abstract void capture(Criminal target);

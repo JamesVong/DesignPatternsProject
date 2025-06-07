@@ -81,7 +81,7 @@ public class MissionScheduler implements AvailabilityObserver {
         System.out.println("   Target: " + mission.getTarget().getAlias() + " (Threat: "
                 + mission.getTarget().getThreatLevel() + ")");
 
-        // Start the mission via MissionManager
+        // Start the mission via Mission Manager
         guild.mission.MissionManager missionManager = new guild.mission.MissionManager();
         missionManager.executeMissionWithStates(hunter, mission.getTarget());
     }
