@@ -2,58 +2,42 @@
 
 import guild.bounty.BountyHunter;
 import guild.bounty.BountyHunterFactory;
-import guild.bounty.ImperialFactory;
 import guild.bounty.MandalorianFactory;
+import guild.bounty.ImperialFactory;
 import guild.criminal.Criminal;
+import guild.context.CaptureContext;
 
 public class Main {
 
-    // A simple subclass of BountyHunter for testing
-    static class TestHunter extends BountyHunter {
-
-        public TestHunter(String name, String faction, String rank) {
-            super(name, faction, rank);
-        }
-
-        @Override
-        public void track(Criminal target) {
-            System.out.println(name + " is tracking " + target.getAlias() + " at " + target.getLastKnownLocation());
-        }
-
-        @Override
-        public void capture(Criminal target) {
-            System.out.println(name + " has captured " + target.getAlias());
-        }
-
-        @Override
-        public void reportStatus() {
-            System.out.println(name + " is currently idle.");
-        }
-    }
-
     public static void main(String[] args) {
-        // Create a criminal
-        Criminal jabba = new Criminal("Jabba Desilijic Tiure", "Jabba the Hutt", 9, "Tatooine");
 
-        // Display criminal info
-        System.out.println("=== Criminal Profile ===");
-        jabba.displayProfile();
+        // Create different threat level criminals
+        Criminal lowThreat = new Criminal("Greedo", "The Green Gunslinger", 2, "Mos Eisley Cantina");
+        Criminal mediumThreat = new Criminal("Jango Fett", "The Original", 5, "Kamino");
+        Criminal highThreat = new Criminal("Jabba Desilijic Tiure", "Jabba the Hutt", 9, "Tatooine Palace");
 
-        // Create factories
+        // Create factories and hunters
         BountyHunterFactory mandalorianFactory = new MandalorianFactory();
         BountyHunterFactory imperialFactory = new ImperialFactory();
 
         BountyHunter dinDjarin = mandalorianFactory.recruitHunter("Din Djarin", "Silver");
-        BountyHunter bobaFett = mandalorianFactory.recruitHunter("Boba Fett", "Gold");
         BountyHunter imperialAgent = imperialFactory.recruitHunter("Agent Kallus", "Commander");
+        BountyHunter bobaFett = mandalorianFactory.recruitHunter("Boba Fett", "Gold");
 
-        // Create a bounty hunter
-        // BountyHunter hunter = new TestHunter("Din Djarin", "Mandalorian", "Silver");
+        // Create capture context
+        CaptureContext context = new CaptureContext();
 
-        // Simulate actions
-        System.out.println("\n=== Bounty Hunter Actions ===");
-        dinDjarin.track(jabba);
-        dinDjarin.capture(jabba);
-        dinDjarin.reportStatus();
+        // Execute missions with different threat levels
+        System.out.println("MISSION 1: Low Threat Capture");
+        context.executeMission(dinDjarin, lowThreat);
+
+        System.out.println("\n" + "=".repeat(80));
+        System.out.println("MISSION 2: Medium Threat Capture");
+        context.executeMission(imperialAgent, mediumThreat);
+
+        System.out.println("\n" + "=".repeat(80));
+        System.out.println("MISSION 3: High Threat Capture");
+        context.executeMission(bobaFett, highThreat);
+
     }
 }
