@@ -5,67 +5,94 @@ import guild.bounty.BountyHunterFactory;
 import guild.bounty.MandalorianFactory;
 import guild.bounty.ImperialFactory;
 import guild.criminal.Criminal;
-import guild.context.CaptureContext;
-import guild.mission.MissionManager;
+import guild.scheduler.MissionScheduler;
+import guild.availability.UnavailableState;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        // Create different threat level criminals
+        // Create criminals with different threat levels
         Criminal lowThreat = new Criminal("Greedo", "The Green Gunslinger", 2, "Mos Eisley Cantina");
         Criminal mediumThreat = new Criminal("Jango Fett", "The Original", 5, "Kamino");
         Criminal highThreat = new Criminal("Jabba Desilijic Tiure", "Jabba the Hutt", 9, "Tatooine Palace");
+        Criminal veryHighThreat = new Criminal("Darth Maul", "The Shadow", 10, "Dathomir");
+        Criminal anotherMedium = new Criminal("Cad Bane", "The Duros Gunslinger", 6, "Tatooine Outskirts");
 
         // Create factories and hunters
         BountyHunterFactory mandalorianFactory = new MandalorianFactory();
         BountyHunterFactory imperialFactory = new ImperialFactory();
 
         BountyHunter dinDjarin = mandalorianFactory.recruitHunter("Din Djarin", "Silver");
-        BountyHunter imperialAgent = imperialFactory.recruitHunter("Agent Kallus", "Commander");
         BountyHunter bobaFett = mandalorianFactory.recruitHunter("Boba Fett", "Gold");
+        BountyHunter imperialAgent = imperialFactory.recruitHunter("Agent Kallus", "Commander");
 
-        // Strategy + Decorator Pattern Demo
+        // Create and setup mission scheduler
+        MissionScheduler scheduler = new MissionScheduler();
 
-        System.out.println("=".repeat(80));
-
-        CaptureContext context = new CaptureContext();
-
-        System.out.println("MISSION 1: Low Threat Capture");
-        context.executeMission(dinDjarin, lowThreat);
+        // Register hunters with scheduler (this sets up observer relationships)
+        scheduler.registerHunter(dinDjarin);
+        scheduler.registerHunter(bobaFett);
+        scheduler.registerHunter(imperialAgent);
 
         System.out.println("\n" + "=".repeat(80));
-        System.out.println("MISSION 2: Medium Threat Capture");
-        context.executeMission(imperialAgent, mediumThreat);
+        System.out.println("INITIAL SYSTEM STATUS");
+        System.out.println("=".repeat(80));
+        scheduler.displayStatus();
 
-        // State Pattern
-
+        // DEMO 1: Add missions to queue when hunters are available
+        System.out.println("DEMO 1: AUTOMATIC MISSION ASSIGNMENT");
         System.out.println("=".repeat(80));
 
-        MissionManager missionManager = new MissionManager();
+        System.out.println("Adding high-priority mission...");
+        scheduler.addMission(highThreat, 8);
 
-        // Execute mission with state pattern
-        missionManager.executeMissionWithStates(bobaFett, highThreat);
+        System.out.println("\nAdding medium-priority mission...");
+        scheduler.addMission(mediumThreat, 5);
 
-        // Demonstrate state transition control
+        System.out.println("\nAdding low-priority mission...");
+        scheduler.addMission(lowThreat, 3);
 
-        System.out.println("=".repeat(80));
-        demonstrateStateControl();
+        // Wait a moment for missions to complete
+        System.out.println("\nWaiting for missions to complete...\n");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
-    }
+        scheduler.displayStatus();
 
-    private static void demonstrateStateControl() {
+        // DEMO 2: Add missions when hunters are busy
 
-        BountyHunterFactory factory = new MandalorianFactory();
-        BountyHunter testHunter = factory.recruitHunter("Test Hunter", "Bronze");
-        Criminal testCriminal = new Criminal("Test Target", "The Tester", 3, "Test Location");
+        // Manually set some hunters as unavailable
+        dinDjarin.setAvailability(new UnavailableState("Equipment maintenance"));
+        bobaFett.setAvailability(new UnavailableState("Medical check-up"));
 
-        // Create context but don't complete actions
-        guild.state.HunterContext hunterContext = new guild.state.HunterContext(testHunter);
+        scheduler.displayStatus();
 
-        // Complete current action and advance
-        hunterContext.performCurrentAction(testCriminal);
-        hunterContext.proceedToNextState();
+        System.out.println("Adding missions while hunters are busy...");
+        scheduler.addMission(veryHighThreat, 10);
+        scheduler.addMission(anotherMedium, 6);
+
+        scheduler.displayStatus();
+
+        // DEMO 3: Hunter becomes available and gets auto-assigned
+
+        System.out.println("Din Djarin finishing maintenance...");
+        dinDjarin.setAvailability(new guild.availability.AvailableState());
+
+        System.out.println("\nBoba Fett finishing medical check...");
+        bobaFett.setAvailability(new guild.availability.AvailableState());
+
+        // Wait for auto-assignments
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        scheduler.displayStatus();
 
     }
 }

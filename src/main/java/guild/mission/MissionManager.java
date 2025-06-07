@@ -4,45 +4,60 @@ import guild.bounty.BountyHunter;
 import guild.criminal.Criminal;
 import guild.context.CaptureContext;
 import guild.state.HunterContext;
-import guild.state.EquippedState;
-import guild.state.TrackingState;
-import guild.state.CaptureState;
-import guild.state.MissionCompletedState;
+import guild.availability.AvailableState;
+import guild.availability.UnavailableState;
 
 public class MissionManager {
 
     public void executeMissionWithStates(BountyHunter hunter, Criminal criminal) {
+        // Check if hunter is available
+        if (!hunter.isAvailable()) {
+            System.out.println(
+                    "[MISSION] Cannot start mission - " + hunter.getName() + " is " + hunter.getAvailabilityStatus());
+            System.out.println("   Reason: " + hunter.getAvailabilityState().getDescription());
+            return;
+        }
+
         System.out.println("\n" + "=".repeat(100));
-        System.out.println("Starting Mission");
+        System.out.println("STARTING MISSION WITH STATE PATTERN");
         System.out.println("Hunter: " + hunter.getName() + " | Target: " + criminal.getAlias());
         System.out.println("=".repeat(100));
 
-        // First, equip the hunter using Strategy + Decorator patterns
-        CaptureContext captureContext = new CaptureContext();
-        System.out.println("\nEQUIPMENT PREPARATION");
-        BountyHunter equippedHunter = captureContext.equipHunterOnly(hunter, criminal);
+        // Set hunter to unavailable when mission starts
+        hunter.setAvailability(new UnavailableState("Active mission: " + criminal.getAlias()));
 
-        // Create hunter context with state management
-        HunterContext hunterContext = new HunterContext(equippedHunter);
+        try {
+            // First, equip the hunter using Strategy + Decorator patterns
+            CaptureContext captureContext = new CaptureContext();
+            System.out.println("\nPHASE 1: EQUIPMENT PREPARATION");
+            BountyHunter equippedHunter = captureContext.equipHunterOnly(hunter, criminal);
 
-        // Execute mission phases with state transitions
-        System.out.println("\n STATE-BASED MISSION EXECUTION");
+            // Create hunter context with state management
+            HunterContext hunterContext = new HunterContext(equippedHunter);
 
-        // Phase 1: Equipped State
-        executePhase(hunterContext, criminal, "EQUIPMENT PREPARATION");
+            // Execute mission phases with state transitions
+            System.out.println("\nPHASE 2: STATE-BASED MISSION EXECUTION");
 
-        // Phase 2: Tracking State
-        executePhase(hunterContext, criminal, "TARGET TRACKING");
+            // Phase 1: Equipped State
+            executePhase(hunterContext, criminal, "EQUIPMENT PREPARATION");
 
-        // Phase 3: Capture State
-        executePhase(hunterContext, criminal, "TARGET CAPTURE");
+            // Phase 2: Tracking State
+            executePhase(hunterContext, criminal, "TARGET TRACKING");
 
-        // Phase 4: Mission Completed
-        executePhase(hunterContext, criminal, "MISSION COMPLETION");
+            // Phase 3: Capture State
+            executePhase(hunterContext, criminal, "TARGET CAPTURE");
 
-        System.out.println("\n" + "=".repeat(100));
-        System.out.println("Mission Completed");
-        System.out.println("=".repeat(100));
+            // Phase 4: Mission Completed
+            executePhase(hunterContext, criminal, "MISSION COMPLETION");
+
+            System.out.println("\n" + "=".repeat(100));
+            System.out.println("MISSION SUCCESSFULLY COMPLETED!");
+            System.out.println("=".repeat(100));
+
+        } finally {
+            // Always set hunter back to available when mission ends (success or failure)
+            hunter.setAvailability(new AvailableState());
+        }
     }
 
     private void executePhase(HunterContext context, Criminal criminal, String phaseName) {
@@ -57,7 +72,5 @@ public class MissionManager {
             context.proceedToNextState();
         }
 
-        // Add visual separator
-        System.out.println("─".repeat(80));
     }
 }
