@@ -6,6 +6,7 @@ import guild.bounty.MandalorianFactory;
 import guild.bounty.ImperialFactory;
 import guild.criminal.Criminal;
 import guild.context.CaptureContext;
+import guild.mission.MissionManager;
 
 public class Main {
 
@@ -24,10 +25,12 @@ public class Main {
         BountyHunter imperialAgent = imperialFactory.recruitHunter("Agent Kallus", "Commander");
         BountyHunter bobaFett = mandalorianFactory.recruitHunter("Boba Fett", "Gold");
 
-        // Create capture context
+        // Strategy + Decorator Pattern Demo
+
+        System.out.println("=".repeat(80));
+
         CaptureContext context = new CaptureContext();
 
-        // Execute missions with different threat levels
         System.out.println("MISSION 1: Low Threat Capture");
         context.executeMission(dinDjarin, lowThreat);
 
@@ -35,9 +38,34 @@ public class Main {
         System.out.println("MISSION 2: Medium Threat Capture");
         context.executeMission(imperialAgent, mediumThreat);
 
-        System.out.println("\n" + "=".repeat(80));
-        System.out.println("MISSION 3: High Threat Capture");
-        context.executeMission(bobaFett, highThreat);
+        // State Pattern
+
+        System.out.println("=".repeat(80));
+
+        MissionManager missionManager = new MissionManager();
+
+        // Execute mission with state pattern
+        missionManager.executeMissionWithStates(bobaFett, highThreat);
+
+        // Demonstrate state transition control
+
+        System.out.println("=".repeat(80));
+        demonstrateStateControl();
+
+    }
+
+    private static void demonstrateStateControl() {
+
+        BountyHunterFactory factory = new MandalorianFactory();
+        BountyHunter testHunter = factory.recruitHunter("Test Hunter", "Bronze");
+        Criminal testCriminal = new Criminal("Test Target", "The Tester", 3, "Test Location");
+
+        // Create context but don't complete actions
+        guild.state.HunterContext hunterContext = new guild.state.HunterContext(testHunter);
+
+        // Complete current action and advance
+        hunterContext.performCurrentAction(testCriminal);
+        hunterContext.proceedToNextState();
 
     }
 }

@@ -9,21 +9,26 @@ public class CaptureContext {
     private CaptureStrategy strategy;
 
     public void executeMission(BountyHunter hunter, Criminal criminal) {
-        System.out.println("\n Mission Briefing ");
+        System.out.println("\n Mission Briefing");
         System.out.println("Hunter: " + hunter.getName() + " (" + hunter.getFaction() + ")");
         System.out.println("Target: " + criminal.getAlias() + " (Threat Level: " + criminal.getThreatLevel() + ")");
 
-        // Select strategy based on threat level
         strategy = StrategySelector.selectStrategy(criminal);
-
-        // Equip hunter according to strategy
         BountyHunter equippedHunter = strategy.equipHunter(hunter, criminal);
 
-        System.out.println("\n Mission Execution ");
-        // Execute the capture with equipped hunter
+        System.out.println("\nMission Execution");
         strategy.executeCapture(equippedHunter, criminal);
 
-        System.out.println("\n Post Mission Report ");
+        System.out.println("\n Post Mission Report");
         equippedHunter.reportStatus();
+    }
+
+    public BountyHunter equipHunterOnly(BountyHunter hunter, Criminal criminal) {
+        System.out.println("Equipment Briefing");
+        System.out.println("Hunter: " + hunter.getName() + " (" + hunter.getFaction() + ")");
+        System.out.println("Target: " + criminal.getAlias() + " (Threat Level: " + criminal.getThreatLevel() + ")");
+
+        strategy = StrategySelector.selectStrategy(criminal);
+        return strategy.equipHunter(hunter, criminal);
     }
 }
