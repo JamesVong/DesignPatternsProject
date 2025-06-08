@@ -1,4 +1,4 @@
-package main.java.guild.template;
+package guild.template;
 
 public abstract class MissionExecutionTemplate {
 

@@ -1,6 +1,6 @@
-package main.java.guild.bounty;
+package guild.bounty;
 
-import main.java.guild.criminal.Criminal;
+import guild.criminal.Criminal;
 
 public class MandalorianHunter extends BountyHunter {
 

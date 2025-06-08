@@ -1,4 +1,4 @@
-package main.java.guild.command;
+package guild.command;
 
 public class MockBountyHunter {
     private final String name;

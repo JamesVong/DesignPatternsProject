@@ -1,6 +1,6 @@
-package main.java.guild.state;
+package guild.state;
 
-import main.java.guild.criminal.Criminal;
+import guild.criminal.Criminal;
 
 public class TrackingState implements HunterState {
 

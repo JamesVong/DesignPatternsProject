@@ -1,7 +1,7 @@
-package main.java.guild.state;
+package guild.state;
 
-import main.java.guild.bounty.BountyHunter;
-import main.java.guild.criminal.Criminal;
+import guild.bounty.BountyHunter;
+import guild.criminal.Criminal;
 
 public class HunterContext {
     private HunterState currentState;

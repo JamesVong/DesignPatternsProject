@@ -1,4 +1,4 @@
-package main.java.guild.chain;
+package guild.chain;
 
 public abstract class HunterAssignmentHandler {
     protected HunterAssignmentHandler next;

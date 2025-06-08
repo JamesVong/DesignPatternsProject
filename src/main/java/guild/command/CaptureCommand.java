@@ -1,4 +1,4 @@
-package main.java.guild.command;
+package guild.command;
 
 public class CaptureCommand implements Command {
     private final MockBountyHunter hunter;

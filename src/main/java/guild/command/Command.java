@@ -1,4 +1,4 @@
-package main.java.guild.command;
+package guild.command;
 
 public interface Command {
     void execute();

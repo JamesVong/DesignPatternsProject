@@ -1,11 +1,11 @@
-package main.java.guild.mission;
+package guild.mission;
 
-import main.java.guild.bounty.BountyHunter;
-import main.java.guild.criminal.Criminal;
-import main.java.guild.context.CaptureContext;
-import main.java.guild.state.HunterContext;
-import main.java.guild.availability.AvailableState;
-import main.java.guild.availability.UnavailableState;
+import guild.bounty.BountyHunter;
+import guild.criminal.Criminal;
+import guild.context.CaptureContext;
+import guild.state.HunterContext;
+import guild.availability.AvailableState;
+import guild.availability.UnavailableState;
 
 public class MissionManager {
 

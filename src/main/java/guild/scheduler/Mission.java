@@ -1,6 +1,6 @@
-package main.java.guild.scheduler;
+package guild.scheduler;
 
-import main.java.guild.criminal.Criminal;
+import guild.criminal.Criminal;
 
 public class Mission {
     private String missionId;

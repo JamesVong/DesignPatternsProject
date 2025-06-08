@@ -1,4 +1,4 @@
-package main.java.guild.singleton;
+package guild.singleton;
 
 import java.util.HashMap;
 import java.util.Map;

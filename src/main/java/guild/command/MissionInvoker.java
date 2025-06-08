@@ -1,4 +1,4 @@
-package main.java.guild.command;
+package guild.command;
 
 import java.util.LinkedList;
 import java.util.Queue;

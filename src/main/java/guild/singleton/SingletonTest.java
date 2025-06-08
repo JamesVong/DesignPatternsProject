@@ -1,4 +1,4 @@
-package main.java.guild.singleton;
+package guild.singleton;
 
 public class SingletonTest {
     public static void main(String[] args) {
