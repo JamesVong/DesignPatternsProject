@@ -1,4 +1,4 @@
-package main.java.guild.chain;
+package guild.chain;
 
 public class MidTierHunterHandler extends HunterAssignmentHandler {
     @Override

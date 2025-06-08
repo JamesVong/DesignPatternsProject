@@ -1,4 +1,5 @@
-package main.java.guild.chain;
+package guild.chain;
+import guild.chain.*;
 
 public class ChainTest {
     public static void main(String[] args) {

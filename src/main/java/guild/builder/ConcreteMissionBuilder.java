@@ -1,4 +1,4 @@
-package main.java.guild.builder;
+package guild.builder;
 
 public class ConcreteMissionBuilder implements MissionBuilder {
     private MissionProfile mission = new MissionProfile();

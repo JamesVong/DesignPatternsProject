@@ -1,6 +1,6 @@
-package main.java.guild.strategy;
+package guild.strategy;
 
-import main.java.guild.criminal.Criminal;
+import guild.criminal.Criminal;
 
 public class StrategySelector {
 

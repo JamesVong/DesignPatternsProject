@@ -1,4 +1,4 @@
-package main.java.guild.builder;
+package guild.builder;
 
 public interface MissionBuilder {
     void buildTarget();

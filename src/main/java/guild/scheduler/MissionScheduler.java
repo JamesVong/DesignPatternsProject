@@ -1,11 +1,11 @@
-package main.java.guild.scheduler;
+package guild.scheduler;
 
-import main.java.guild.bounty.BountyHunter;
-import main.java.guild.availability.AvailabilityState;
-import main.java.guild.availability.AvailableState;
-import main.java.guild.availability.UnavailableState;
-import main.java.guild.observer.AvailabilityObserver;
-import main.java.guild.criminal.Criminal;
+import guild.bounty.BountyHunter;
+import guild.availability.AvailabilityState;
+import guild.availability.AvailableState;
+import guild.availability.UnavailableState;
+import guild.observer.AvailabilityObserver;
+import guild.criminal.Criminal;
 import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.List;

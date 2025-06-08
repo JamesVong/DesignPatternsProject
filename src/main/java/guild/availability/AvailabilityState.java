@@ -1,4 +1,4 @@
-package main.java.guild.availability;
+package guild.availability;
 
 public interface AvailabilityState {
     boolean isAvailable();
