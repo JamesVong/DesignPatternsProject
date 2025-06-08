@@ -1,9 +1,9 @@
-package guild.strategy;
+package main.java.guild.strategy;
 
-import guild.bounty.BountyHunter;
-import guild.criminal.Criminal;
-import guild.decorator.GadgetDecorator;
-import guild.decorator.WeaponDecorator;
+import main.java.guild.bounty.BountyHunter;
+import main.java.guild.criminal.Criminal;
+import main.java.guild.decorator.GadgetDecorator;
+import main.java.guild.decorator.WeaponDecorator;
 
 public class MediumThreatStrategy implements CaptureStrategy {
 

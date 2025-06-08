@@ -1,7 +1,7 @@
-package guild.observer;
+package main.java.guild.observer;
 
-import guild.bounty.BountyHunter;
-import guild.availability.AvailabilityState;
+import main.java.guild.bounty.BountyHunter;
+import main.java.guild.availability.AvailabilityState;
 
 public interface AvailabilityObserver {
     void onAvailabilityChange(BountyHunter hunter, AvailabilityState oldState, AvailabilityState newState);

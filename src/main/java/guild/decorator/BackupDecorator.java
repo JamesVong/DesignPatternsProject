@@ -1,7 +1,7 @@
-package guild.decorator;
+package main.java.guild.decorator;
 
-import guild.bounty.BountyHunter;
-import guild.criminal.Criminal;
+import main.java.guild.bounty.BountyHunter;
+import main.java.guild.criminal.Criminal;
 
 public class BackupDecorator extends BountyHunterDecorator {
 

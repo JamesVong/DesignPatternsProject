@@ -1,6 +1,6 @@
-package guild.state;
+package main.java.guild.state;
 
-import guild.criminal.Criminal;
+import main.java.guild.criminal.Criminal;
 
 public class EquippedState implements HunterState {
 

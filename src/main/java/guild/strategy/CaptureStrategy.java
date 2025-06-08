@@ -1,7 +1,7 @@
-package guild.strategy;
+package main.java.guild.strategy;
 
-import guild.bounty.BountyHunter;
-import guild.criminal.Criminal;
+import main.java.guild.bounty.BountyHunter;
+import main.java.guild.criminal.Criminal;
 
 public interface CaptureStrategy {
     BountyHunter equipHunter(BountyHunter hunter, Criminal criminal);

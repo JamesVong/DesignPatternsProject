@@ -1,4 +1,4 @@
-package guild.criminal;
+package main.java.guild.criminal;
 
 public class Criminal {
 

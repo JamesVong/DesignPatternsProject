@@ -1,9 +1,9 @@
-package guild.context;
+package main.java.guild.context;
 
-import guild.bounty.BountyHunter;
-import guild.criminal.Criminal;
-import guild.strategy.CaptureStrategy;
-import guild.strategy.StrategySelector;
+import main.java.guild.bounty.BountyHunter;
+import main.java.guild.criminal.Criminal;
+import main.java.guild.strategy.CaptureStrategy;
+import main.java.guild.strategy.StrategySelector;
 
 public class CaptureContext {
     private CaptureStrategy strategy;
