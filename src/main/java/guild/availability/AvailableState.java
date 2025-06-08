@@ -1,4 +1,4 @@
-package guild.availability;
+package main.java.guild.availability;
 
 public class AvailableState implements AvailabilityState {
 

@@ -1,9 +1,9 @@
-package guild.bounty;
+package main.java.guild.bounty;
 
-import guild.criminal.Criminal;
-import guild.availability.AvailabilityState;
-import guild.availability.AvailableState;
-import guild.observer.AvailabilityObserver;
+import main.java.guild.criminal.Criminal;
+import main.java.guild.availability.AvailabilityState;
+import main.java.guild.availability.AvailableState;
+import main.java.guild.observer.AvailabilityObserver;
 import java.util.ArrayList;
 import java.util.List;
 
