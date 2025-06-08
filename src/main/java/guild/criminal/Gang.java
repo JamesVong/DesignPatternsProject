@@ -2,6 +2,7 @@ package guild.criminal;
 
 import java.util.ArrayList;
 import java.util.List;
+import guild.visitor.CriminalVisitor;
 
 public class Gang extends Criminal {
 
@@ -33,6 +34,11 @@ public class Gang extends Criminal {
         for (Criminal c : members) {
             System.out.println(" - " + c.getName() + " (Threat: " + c.getThreatLevel() + ")");
         }
+    }
+
+    @Override
+    public void accept(CriminalVisitor visitor) {
+        visitor.visit(this);
     }
 
     // Optional: sum total threat
