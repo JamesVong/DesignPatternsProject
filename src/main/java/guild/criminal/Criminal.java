@@ -1,5 +1,7 @@
 package guild.criminal;
 
+import guild.visitor.CriminalVisitor;
+
 public class Criminal {
 
     protected String name;
@@ -28,6 +30,10 @@ public class Criminal {
 
     public String getLastKnownLocation() {
         return lastKnownLocation;
+    }
+
+    public void accept(CriminalVisitor visitor) {
+        visitor.visit(this);
     }
 
     public void displayProfile() {
