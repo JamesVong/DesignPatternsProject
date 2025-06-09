@@ -3,7 +3,6 @@ package guild.scheduler;
 import guild.bounty.BountyHunter;
 import guild.availability.AvailabilityState;
 import guild.availability.AvailableState;
-import guild.availability.UnavailableState;
 import guild.observer.AvailabilityObserver;
 import guild.criminal.Criminal;
 import java.util.PriorityQueue;
@@ -105,5 +104,9 @@ public class MissionScheduler implements AvailabilityObserver {
             }
         }
         System.out.println();
+    }
+
+    public List<BountyHunter> getRegisteredHunters() {
+        return registeredHunters;
     }
 }
