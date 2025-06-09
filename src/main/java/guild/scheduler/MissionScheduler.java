@@ -53,7 +53,7 @@ public class MissionScheduler implements AvailabilityObserver {
 
             // Use processMission from facade
             MissionFacade facade = new MissionFacade("resources/criminals.csv"); // <-- use correct path
-            facade.processMission(mission.getAssignedHunter(), mission.getCriminal(), priority);
+            facade.processMission(mission.getMissionId() ,mission.getAssignedHunter(), mission.getCriminal(), priority);
         }
     }
 

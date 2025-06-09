@@ -1,72 +1,43 @@
 package guild.builder;
 
-import guild.bounty.BountyHunter;
 import guild.criminal.Criminal;
 
 public class MissionProfile {
-    private String targetName;
+    private String missionId;
     private String location;
-    private String environment;
-    private String assignedHunter;
-    private String equipment;
+    private String targetName;
+    private String strategy;
     private Criminal criminal;
-    private int threatLevel;
-    private BountyHunter hunter;
+    private int riskLevel;
 
-    public void setAssignedHunter(BountyHunter hunter) {
-        this.hunter = hunter;
-    }
-
-    public BountyHunter getHunter() {
-        return this.hunter;
-    }
-
-    public void setTargetName(String targetName) {
-        this.targetName = targetName;
-    }
-
-    public void setLocation(String location) {
+    // ✅ Fix: Accept Criminal and assign it
+    public MissionProfile(String missionId, String location, String targetName,
+                          String strategy, int riskLevel, Criminal criminal) {
+        this.missionId = missionId;
         this.location = location;
+        this.targetName = targetName;
+        this.strategy = strategy;
+        this.riskLevel = riskLevel;
+        this.criminal = criminal; // 🔴 You missed this
     }
 
-    public void setEnvironment(String environment) {
-        this.environment = environment;
-    }
+    // Getters
+    public String getMissionId() { return missionId; }
+    public String getLocation() { return location; }
+    public String getTargetName() { return targetName; }
+    public String getStrategy() { return strategy; }
+    public int getRiskLevel() { return riskLevel; }
+    public Criminal getCriminal() { return criminal; }  // ✅ Needed in Drone/Mediator
 
-    public String getAssignedHunter() {
-        return assignedHunter;
-    }
-
-    public void setAssignedHunter(String assignedHunter) {
-        this.assignedHunter = assignedHunter;
-    }
-
-    public void setEquipment(String equipment) {
-        this.equipment = equipment;
-    }
-
-    public Criminal getCriminal() {
-        return criminal;
-    }
-
-    public void setCriminal(Criminal criminal) {
-        this.criminal = criminal;
-    }
-
-    public int getThreatLevel() {
-        return threatLevel;
-    }
-
-    public void setThreatLevel(int threatLevel) {
-        this.threatLevel = threatLevel;
-    }
-
-    public void displayProfile() {
-        System.out.println("=== Mission Profile ===");
-        System.out.println("Target: " + targetName);
-        System.out.println("Location: " + location);
-        System.out.println("Environment: " + environment);
-        System.out.println("Hunter: " + assignedHunter);
-        System.out.println("Equipment: " + equipment);
+    @Override
+    public String toString() {
+        return "MissionProfile{" +
+                "missionId='" + missionId + '\'' +
+                ", location='" + location + '\'' +
+                ", targetName='" + targetName + '\'' +
+                ", strategy='" + strategy + '\'' +
+                ", riskLevel=" + riskLevel +
+                ", criminal=" + (criminal != null ? criminal.getName() : "null") +
+                '}';
     }
 }
