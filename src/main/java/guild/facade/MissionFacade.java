@@ -4,10 +4,7 @@ import guild.bounty.BountyHunter;
 import guild.bounty.BountyHunterFactory;
 import guild.bounty.MandalorianFactory;
 import guild.bounty.ImperialFactory;
-import guild.builder.ConcreteMissionBuilder;
-import guild.builder.MissionBuilder;
-import guild.builder.MissionDirector;
-import guild.builder.MissionProfile;
+import guild.builder.*;
 import guild.command.CaptureCommand;
 import guild.command.Command;
 import guild.command.MissionInvoker;
@@ -99,7 +96,7 @@ public class MissionFacade {
         scheduler.addMission(criminal, priority);
     }
 
-    public void processMission(BountyHunter assignedHunter, Criminal criminal, int priority) {
+    public void processMission(String missionId, BountyHunter assignedHunter, Criminal criminal, int priority) {
         if (assignedHunter == null) {
             System.out.println("No suitable hunter found for this mission.");
             return;
@@ -107,12 +104,14 @@ public class MissionFacade {
 
 
         // === Builder Pattern: Construct the mission ===
-        MissionBuilder builder = new ConcreteMissionBuilder();
-        builder.getMission().setCriminal(criminal);
-        builder.getMission().setThreatLevel(priority);
-        MissionDirector director = new MissionDirector(builder);
-        director.constructMission();
-        MissionProfile profile = builder.getMission();
+        MissionProfile profile = new MissionProfileBuilder()
+                .setMissionId(missionId) // Generate or pass in actual mission ID
+                .setLocation(criminal.getLastKnownLocation())
+                .setTargetName(criminal.getName())
+                .setStrategy("stealth") // You can modify this based on your strategy pattern later
+                .setRiskLevel(priority)
+                .setCriminal(criminal)
+                .build();
 
         // === Decorator Pattern: Equip hunter with gadgets ===
         BountyHunter decoratedHunter = new GadgetDecorator(assignedHunter);
