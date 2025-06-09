@@ -1,5 +1,7 @@
 package guild.builder;
 
+import guild.criminal.Criminal;
+
 public class ConcreteMissionBuilder implements MissionBuilder {
     private MissionProfile mission = new MissionProfile();
 
@@ -31,5 +33,15 @@ public class ConcreteMissionBuilder implements MissionBuilder {
     @Override
     public MissionProfile getMission() {
         return mission;
+    }
+
+    @Override
+    public void setCriminal(Criminal criminal) {
+        mission.setCriminal(criminal);
+    }
+
+    @Override
+    public void setThreatLevel(int threatLevel) {
+        mission.setThreatLevel(threatLevel);
     }
 }

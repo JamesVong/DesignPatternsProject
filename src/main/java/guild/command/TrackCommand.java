@@ -1,14 +1,19 @@
 package guild.command;
 
-public class TrackCommand implements Command {
-    private final MockBountyHunter hunter;
+import guild.bounty.BountyHunter;
+import guild.criminal.Criminal;
 
-    public TrackCommand(MockBountyHunter hunter) {
+public class TrackCommand implements Command {
+    private BountyHunter hunter;
+    private Criminal criminal;
+
+    public TrackCommand(BountyHunter hunter, Criminal criminal) {
         this.hunter = hunter;
+        this.criminal = criminal;
     }
 
     @Override
     public void execute() {
-        hunter.track();
+        hunter.track(criminal);
     }
 }

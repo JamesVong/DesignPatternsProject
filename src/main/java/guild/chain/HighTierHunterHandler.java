@@ -1,14 +1,35 @@
 package guild.chain;
 
+import guild.availability.UnavailableState;
+import guild.bounty.BountyHunter;
+
 public class HighTierHunterHandler extends HunterAssignmentHandler {
+
     @Override
     public void assignHunter(MockMission mission) {
-        if (mission.getThreatLevel() == 3) {
-            System.out.println("HighTierHunter assigned to mission: " + mission.getMissionId());
-        } else if (next != null) {
+        for (BountyHunter hunter : mission.getAvailableHunters()) {
+            if (canHandle(hunter, mission.getPriority()) &&
+                    hunter.isAvailable()) {
+
+                mission.setAssignedHunter(hunter);
+                hunter.setAvailability(new UnavailableState());
+
+                System.out.println("[HighTierHunterHandler] Assigned Hunter: " + hunter.getName() +
+                        " → Mission: " + mission.getMissionId());
+                return;
+            }
+        }
+
+        if (next != null) {
             next.assignHunter(mission);
         } else {
-            System.out.println("No available hunter for mission: " + mission.getMissionId());
+            System.out.println("[HighTierHunterHandler] No suitable hunter found for mission: " +
+                    mission.getMissionId());
         }
+    }
+
+    private boolean canHandle(BountyHunter hunter, int threatLevel) {
+        String rank = hunter.getRank();
+        return "Commander".equalsIgnoreCase(rank) && threatLevel >= 7;
     }
 }

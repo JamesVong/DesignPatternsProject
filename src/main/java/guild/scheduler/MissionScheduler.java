@@ -3,16 +3,18 @@ package guild.scheduler;
 import guild.bounty.BountyHunter;
 import guild.availability.AvailabilityState;
 import guild.availability.AvailableState;
+import guild.chain.*;
+import guild.facade.MissionFacade;
 import guild.observer.AvailabilityObserver;
 import guild.criminal.Criminal;
-import java.util.PriorityQueue;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ArrayList;
+import guild.singleton.GuildRegistry;
+
+import java.util.*;
 
 public class MissionScheduler implements AvailabilityObserver {
     private PriorityQueue<Mission> missionQueue;
     private List<BountyHunter> registeredHunters;
+    private final Queue<MockMission> pendingMissions = new LinkedList<>();
     private int missionCounter = 1;
 
     public MissionScheduler() {
@@ -28,16 +30,39 @@ public class MissionScheduler implements AvailabilityObserver {
         System.out.println("[SCHEDULER] " + hunter.getName() + " registered with scheduler");
     }
 
-    public void addMission(Criminal target, int priority) {
-        String missionId = "M" + String.format("%03d", missionCounter++);
-        Mission mission = new Mission(missionId, target, priority);
-        missionQueue.offer(mission);
+    public void addMission(Criminal criminal, int priority) {
+        Map<String, BountyHunter> allHunters = GuildRegistry.getInstance().getAllHunters();
 
-        System.out.println("[SCHEDULER] New mission queued: " + mission);
-        System.out.println("   Queue size: " + missionQueue.size() + " pending missions");
+        // Chain of Responsibility setup
+        HunterAssignmentHandler low = new LowTierHunterHandler();
+        HunterAssignmentHandler mid = new MidTierHunterHandler();
+        HunterAssignmentHandler high = new HighTierHunterHandler();
+        low.setNext(mid);
+        mid.setNext(high);
 
-        // Try to assign immediately if hunters are available
-        tryAssignMissions();
+        // Build mission
+        String missionID = generateMissionID();
+        MockMission mission = new MockMission(missionID, priority, allHunters.values(), criminal);
+        low.assignHunter(mission);
+
+        if (mission.getAssignedHunter() == null) {
+            System.out.println("No suitable hunter available. Queuing mission...");
+            pendingMissions.add(mission);
+        } else {
+            System.out.println("Assigned Hunter: " + mission.getAssignedHunter().getName());
+
+            // Use processMission from facade
+            MissionFacade facade = new MissionFacade("resources/criminals.csv"); // <-- use correct path
+            facade.processMission(mission.getAssignedHunter(), mission.getCriminal(), priority);
+        }
+    }
+
+    private String generateMissionID() {
+        return "M" + String.format("%03d", missionCounter++);
+    }
+
+    public Queue<MockMission> getPendingMissions() {
+        return pendingMissions;
     }
 
     @Override

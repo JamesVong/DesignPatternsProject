@@ -4,6 +4,8 @@ import guild.criminal.Criminal;
 import guild.availability.AvailabilityState;
 import guild.availability.AvailableState;
 import guild.observer.AvailabilityObserver;
+import guild.singleton.GuildRegistry;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,10 @@ public abstract class BountyHunter {
         return rank;
     }
 
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
     public boolean isAvailable() {
         return availabilityState.isAvailable();
     }
@@ -55,9 +61,10 @@ public abstract class BountyHunter {
                 oldState.getStatus() + " → " + newState.getStatus());
         System.out.println("   Reason: " + newState.getDescription());
 
-        // Notify all observers
-        notifyObservers(oldState, newState);
+        // Notify all observers through the registry
+        GuildRegistry.getInstance().notifyObservers(this, oldState, newState);
     }
+
 
     // Observer management methods
     public void addObserver(AvailabilityObserver observer) {
