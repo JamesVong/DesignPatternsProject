@@ -16,8 +16,17 @@ public class CriminalAdapter {
     public List<Criminal> getCriminals() {
         List<String> rawData = database.readData();
         List<Criminal> criminals = new ArrayList<>();
+
+        boolean isFirstLine = true;
         for (String line : rawData) {
+            if (isFirstLine && line.contains("ThreatLevel")) {
+                isFirstLine = false;
+                continue; // Skip header
+            }
+
             String[] fields = line.split(",");
+            if (fields.length < 4) continue; // Skip malformed lines
+
             String name = fields[0];
             String alias = fields[1];
             int threatLevel = Integer.parseInt(fields[2]);
@@ -26,4 +35,5 @@ public class CriminalAdapter {
         }
         return criminals;
     }
+
 }
