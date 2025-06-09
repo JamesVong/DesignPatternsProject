@@ -53,23 +53,30 @@ public abstract class BountyHunter {
     }
 
     public void setAvailability(AvailabilityState newState) {
+        if (this.availabilityState.getStatus().equals(newState.getStatus())) {
+            // Avoid re-notifying if the status is the same
+            return;
+        }
+
         AvailabilityState oldState = this.availabilityState;
         this.availabilityState = newState;
 
-        // Log the change
         System.out.println("[AVAILABILITY] " + name + " status changed: " +
                 oldState.getStatus() + " → " + newState.getStatus());
         System.out.println("   Reason: " + newState.getDescription());
 
-        // Notify all observers through the registry
-        GuildRegistry.getInstance().notifyObservers(this, oldState, newState);
+        notifyObservers(oldState, newState);
     }
+
+
 
 
     // Observer management methods
     public void addObserver(AvailabilityObserver observer) {
-        observers.add(observer);
-        System.out.println("[OBSERVER] Observer registered for " + name);
+        if (!observers.contains(observer)) {
+            observers.add(observer);
+            System.out.println("[OBSERVER] Observer registered for " + name);
+        }
     }
 
     public void removeObserver(AvailabilityObserver observer) {
