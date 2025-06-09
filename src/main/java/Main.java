@@ -1,64 +1,55 @@
 import guild.facade.MissionFacade;
 import guild.criminal.Criminal;
+import guild.singleton.GuildRegistry;
 
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        // File path for the CSV file
+        // Initialize facade, register hunters as you have
         String criminalFilePath = "src/main/java/resources/criminals.csv";
-
-        // Initialize the MissionFacade
         MissionFacade missionFacade = new MissionFacade(criminalFilePath);
-
-        // Fetch criminals
         List<Criminal> criminals = missionFacade.fetchCriminals();
-        System.out.println("Fetched Criminals:");
-        for (Criminal criminal : criminals) {
-            System.out.println(criminal);
-        }
 
-        // Recruit hunters and display initial status
-        missionFacade.recruitHunters();
-        System.out.println("\n" + "=".repeat(80));
+        // Optionally print criminals with info showing Adapter + Proxy + Composite + Visitor effects
+        System.out.println("Criminals loaded with Adapter, Proxy, Composite, Visitor patterns:");
+
+        criminals.forEach(System.out::println);
+
+        missionFacade.recruitHunters(); // Hunters created via Factory, registered with observer
+
         missionFacade.displaySchedulerStatus();
 
-        // Add missions
-        System.out.println("Adding high-priority mission...");
-        missionFacade.addMission(criminals.get(2), 8); // Jabba Desilijic Tiure
+        // Submit missions, showcasing Chain, Builder, Command, Template, Mediator, Decorator
+        missionFacade.addMission(criminals.get(2), 8); // High priority
+        missionFacade.addMission(criminals.get(1), 5); // Medium
+        missionFacade.addMission(criminals.get(0), 3); // Low
 
-        System.out.println("\nAdding medium-priority mission...");
-        missionFacade.addMission(criminals.get(1), 5); // Jango Fett
-
-        System.out.println("\nAdding low-priority mission...");
-        missionFacade.addMission(criminals.get(0), 3); // Greedo
-
-        // Wait for missions to complete
-        System.out.println("\nWaiting for missions to complete...\n");
         missionFacade.waitForMissions(3000);
         missionFacade.displaySchedulerStatus();
 
-        // Set hunters as unavailable and add more missions
-        missionFacade.setHunterUnavailable("Din Djarin", "Equipment maintenance");
-        missionFacade.setHunterUnavailable("Boba Fett", "Medical check-up");
+        missionFacade.waitForMissions(5000);
+
+        // Simulate hunters busy (state change triggers observer, scheduler queues missions)
+        missionFacade.setHunterUnavailable("Din Djarin", "Maintenance");
+        missionFacade.setHunterUnavailable("Boba Fett", "Medical");
         missionFacade.displaySchedulerStatus();
 
-        System.out.println("Adding missions while hunters are busy...");
-        missionFacade.addMission(criminals.get(3), 10); // Darth Maul
-        missionFacade.addMission(criminals.get(4), 6);  // Cad Bane
+        // Submit more missions while hunters are busy (go to scheduler queue)
+        missionFacade.addMission(criminals.get(3), 10); // Highest priority
+        missionFacade.addMission(criminals.get(4), 6);
 
         missionFacade.displaySchedulerStatus();
 
-        // Set hunters as available
-        System.out.println("Din Djarin finishing maintenance...");
+        // Set hunters back available (triggers scheduler observer to assign queued missions)
         missionFacade.setHunterAvailable("Din Djarin");
-
-        System.out.println("\nBoba Fett finishing medical check...");
         missionFacade.setHunterAvailable("Boba Fett");
 
-        // Wait for auto-assignments
         missionFacade.waitForMissions(2000);
         missionFacade.displaySchedulerStatus();
+
+        // Print final hunter states and gadgets (Decorator pattern effects)
+        GuildRegistry.getInstance().printAllHunters();
     }
 }

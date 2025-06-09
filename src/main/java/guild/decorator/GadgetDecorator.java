@@ -1,5 +1,6 @@
 package guild.decorator;
 
+import guild.availability.AvailabilityState;
 import guild.bounty.BountyHunter;
 import guild.criminal.Criminal;
 
@@ -7,6 +8,11 @@ public class GadgetDecorator extends BountyHunterDecorator {
 
     public GadgetDecorator(BountyHunter hunter) {
         super(hunter);
+    }
+
+    @Override
+    public void setAvailability(AvailabilityState newState) {
+        super.setAvailability(newState);
     }
 
     @Override

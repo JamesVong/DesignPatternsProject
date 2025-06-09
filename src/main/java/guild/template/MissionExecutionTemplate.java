@@ -1,8 +1,12 @@
 package guild.template;
 
-public abstract class MissionExecutionTemplate {
+import guild.builder.MissionProfile;
 
-    public final void executeMission() {
+public abstract class MissionExecutionTemplate {
+    protected MissionProfile mission;
+
+    public final void executeMission(MissionProfile profile) {
+        this.mission = profile;
         gatherIntel();
         approachTarget();
         engageTarget();
