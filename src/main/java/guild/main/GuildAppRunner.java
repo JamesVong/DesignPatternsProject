@@ -4,9 +4,9 @@ import guild.singleton.GuildRegistry;
 
 import java.util.List;
 
-public class Main {
+public class GuildAppRunner {
 
-    public static void main(String[] args) {
+    public static void run() {
         // Initialize facade, register hunters as you have
         String criminalFilePath = "src/main/java/resources/criminals.csv";
         MissionFacade missionFacade = new MissionFacade(criminalFilePath);
