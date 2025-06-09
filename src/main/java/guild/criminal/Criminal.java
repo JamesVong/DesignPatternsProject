@@ -42,4 +42,15 @@ public class Criminal {
         System.out.println("Threat Level: " + threatLevel);
         System.out.println("Last Known Location: " + lastKnownLocation);
     }
+
+    @Override
+    public String toString() {
+        return "Criminal{" +
+                "name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
+                ", threatLevel=" + threatLevel +
+                ", lastKnownLocation='" + lastKnownLocation + '\'' +
+                '}';
+    }
+
 }
