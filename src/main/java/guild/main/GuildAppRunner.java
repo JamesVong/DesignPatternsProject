@@ -1,3 +1,5 @@
+package guild.main;
+
 import guild.facade.MissionFacade;
 import guild.criminal.Criminal;
 import guild.singleton.GuildRegistry;
