@@ -1,5 +1,6 @@
 package guild.decorator;
 
+import guild.availability.AvailabilityState;
 import guild.bounty.BountyHunter;
 import guild.criminal.Criminal;
 
@@ -9,6 +10,11 @@ public abstract class BountyHunterDecorator extends BountyHunter {
     public BountyHunterDecorator(BountyHunter hunter) {
         super(hunter.getName(), hunter.getFaction(), hunter.getRank());
         this.wrappedHunter = hunter;
+    }
+
+    @Override
+    public void setAvailability(AvailabilityState newState) {
+        wrappedHunter.setAvailability(newState);
     }
 
     @Override

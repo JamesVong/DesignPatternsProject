@@ -1,6 +1,13 @@
 package guild.template;
 
+import guild.command.MissionInvoker;
+
 public class StandardMissionExecution extends MissionExecutionTemplate {
+    private MissionInvoker invoker;
+
+    public StandardMissionExecution(MissionInvoker invoker) {
+        this.invoker = invoker;
+    }
 
     @Override
     protected void gatherIntel() {
@@ -14,7 +21,10 @@ public class StandardMissionExecution extends MissionExecutionTemplate {
 
     @Override
     protected void engageTarget() {
-        System.out.println("Engaging target using non-lethal methods...");
+        System.out.println("Executing mission commands...");
+        if (invoker != null) {
+            invoker.executeAll();
+        }
     }
 
     @Override
