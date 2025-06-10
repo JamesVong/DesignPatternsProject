@@ -29,8 +29,6 @@ public class Main {
         missionFacade.waitForMissions(3000);
         missionFacade.displaySchedulerStatus();
 
-        missionFacade.waitForMissions(5000);
-
         // Simulate hunters busy (state change triggers observer, scheduler queues missions)
         missionFacade.setHunterUnavailable("Din Djarin", "Maintenance");
         missionFacade.setHunterUnavailable("Boba Fett", "Medical");

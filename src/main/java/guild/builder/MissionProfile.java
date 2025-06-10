@@ -10,7 +10,6 @@ public class MissionProfile {
     private Criminal criminal;
     private int riskLevel;
 
-    // ✅ Fix: Accept Criminal and assign it
     public MissionProfile(String missionId, String location, String targetName,
                           String strategy, int riskLevel, Criminal criminal) {
         this.missionId = missionId;
@@ -18,7 +17,7 @@ public class MissionProfile {
         this.targetName = targetName;
         this.strategy = strategy;
         this.riskLevel = riskLevel;
-        this.criminal = criminal; // 🔴 You missed this
+        this.criminal = criminal;
     }
 
     // Getters
@@ -27,7 +26,7 @@ public class MissionProfile {
     public String getTargetName() { return targetName; }
     public String getStrategy() { return strategy; }
     public int getRiskLevel() { return riskLevel; }
-    public Criminal getCriminal() { return criminal; }  // ✅ Needed in Drone/Mediator
+    public Criminal getCriminal() { return criminal; }
 
     @Override
     public String toString() {
