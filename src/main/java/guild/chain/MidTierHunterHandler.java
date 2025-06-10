@@ -1,5 +1,6 @@
 package guild.chain;
 
+import guild.availability.AvailableState;
 import guild.availability.UnavailableState;
 import guild.bounty.BountyHunter;
 
@@ -9,7 +10,7 @@ public class MidTierHunterHandler extends HunterAssignmentHandler {
     public void assignHunter(MockMission mission) {
         for (BountyHunter hunter : mission.getAvailableHunters()) {
             if (canHandle(hunter, mission.getPriority()) &&
-                    hunter.isAvailable()) {
+                    hunter.getAvailabilityState().getStatus().equalsIgnoreCase("AVAILABLE")) {
 
                 mission.setAssignedHunter(hunter);
                 hunter.setAvailability(new UnavailableState());
