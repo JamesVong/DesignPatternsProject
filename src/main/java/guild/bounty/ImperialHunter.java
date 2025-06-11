@@ -12,6 +12,7 @@ public class ImperialHunter extends BountyHunter {
     public void track(Criminal target) {
         System.out.println("[Imperial] " + name + " deploys Imperial resources to track " +
                 target.getAlias() + " at " + target.getLastKnownLocation());
+        weapon.use();
     }
 
     @Override
