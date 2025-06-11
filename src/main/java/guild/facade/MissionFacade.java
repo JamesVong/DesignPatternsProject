@@ -7,6 +7,7 @@ import guild.bounty.BountyHunter;
 import guild.bounty.BountyHunterFactory;
 import guild.bounty.ImperialFactory;
 import guild.bounty.MandalorianFactory;
+import guild.bridge.*;
 import guild.builder.MissionProfile;
 import guild.builder.MissionProfileBuilder;
 import guild.chain.HunterAssignmentHandler;
@@ -54,9 +55,18 @@ public class MissionFacade {
     }
 
     public void recruitHunters() {
+        WeaponEffect plasma = new PlasmaBolt();
+        WeaponEffect blade = new VibroBlade();
+
+        Weapon blaster = new Blaster(plasma);
+        Weapon saber = new Saber(blade);
+
         BountyHunter dinDjarin = mandalorianFactory.recruitHunter("Din Djarin", "Silver");
+        dinDjarin.setWeapon(blaster);
         BountyHunter bobaFett = mandalorianFactory.recruitHunter("Boba Fett", "Gold");
+        bobaFett.setWeapon(blaster);
         BountyHunter imperialAgent = imperialFactory.recruitHunter("Agent Kallus", "Commander");
+        imperialAgent.setWeapon(saber);
 
         // Register hunters with singleton registry (which also attaches observer)
         GuildRegistry.getInstance().registerHunter("Din Djarin", dinDjarin);
