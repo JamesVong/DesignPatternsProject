@@ -1,5 +1,6 @@
 package guild.bounty;
 
+import guild.bridge.Weapon;
 import guild.criminal.Criminal;
 import guild.availability.AvailabilityState;
 import guild.availability.AvailableState;
@@ -15,6 +16,7 @@ public abstract class BountyHunter {
     protected String rank;
     protected AvailabilityState availabilityState;
     protected List<AvailabilityObserver> observers;
+    protected Weapon weapon;
 
     public BountyHunter(String name, String faction, String rank) {
         this.name = name;
@@ -34,6 +36,10 @@ public abstract class BountyHunter {
 
     public String getRank() {
         return rank;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
     public void setRank(String rank) {
