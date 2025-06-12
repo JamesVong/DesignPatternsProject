@@ -12,6 +12,7 @@ public class MandalorianHunter extends BountyHunter {
     public void track(Criminal target) {
         System.out.println("[Mandalorian] " + name + " uses advanced tracking technology to locate " +
                 target.getAlias() + " at " + target.getLastKnownLocation());
+        weapon.use();
     }
 
     @Override
