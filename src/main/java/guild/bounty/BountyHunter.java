@@ -1,5 +1,6 @@
 package guild.bounty;
 
+import guild.bridge.Weapon;
 import guild.criminal.Criminal;
 import guild.availability.AvailabilityState;
 import guild.availability.AvailableState;
@@ -15,6 +16,7 @@ public abstract class BountyHunter {
     protected String rank;
     protected AvailabilityState availabilityState;
     protected List<AvailabilityObserver> observers;
+    protected Weapon weapon;
 
     public BountyHunter(String name, String faction, String rank) {
         this.name = name;
@@ -36,6 +38,10 @@ public abstract class BountyHunter {
         return rank;
     }
 
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
     public void setRank(String rank) {
         this.rank = rank;
     }
@@ -53,23 +59,30 @@ public abstract class BountyHunter {
     }
 
     public void setAvailability(AvailabilityState newState) {
+        if (this.availabilityState.getStatus().equals(newState.getStatus())) {
+            // Avoid re-notifying if the status is the same
+            return;
+        }
+
         AvailabilityState oldState = this.availabilityState;
         this.availabilityState = newState;
 
-        // Log the change
         System.out.println("[AVAILABILITY] " + name + " status changed: " +
                 oldState.getStatus() + " → " + newState.getStatus());
         System.out.println("   Reason: " + newState.getDescription());
 
-        // Notify all observers through the registry
-        GuildRegistry.getInstance().notifyObservers(this, oldState, newState);
+        notifyObservers(oldState, newState);
     }
+
+
 
 
     // Observer management methods
     public void addObserver(AvailabilityObserver observer) {
-        observers.add(observer);
-        System.out.println("[OBSERVER] Observer registered for " + name);
+        if (!observers.contains(observer)) {
+            observers.add(observer);
+            System.out.println("[OBSERVER] Observer registered for " + name);
+        }
     }
 
     public void removeObserver(AvailabilityObserver observer) {
